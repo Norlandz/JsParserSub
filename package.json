@@ -1,0 +1,32 @@
+{
+  "name": "js_parser_sub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node ./generated_Ts2Js/main/index.js",
+    "comment": "// npm run dev ...",
+    "start": "// fastify start ./generated_Ts2Js/main/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.44.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "fastify": "^4.21.0",
+    "fastify-cli": "^5.8.0",
+    "moment": "^2.29.4",
+    "ts-api-utils": "^1.0.1",
+    "tsutils": "^3.21.0"
+  },
+  "type": "module"
+}
