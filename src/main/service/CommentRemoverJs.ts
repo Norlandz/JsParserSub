@@ -217,8 +217,10 @@ class FsUtil {
 // {
 //   //   const folderPath_RemoveBase = './test/c01_simpleCase/res';
 //   //   const folderPath_RemoveOutput = './test/c01_simpleCase/CommentRemoverJs-out';
-//   const folderPath_RemoveBase = '../TrafficSystemMockJs/TrafficSystemMockJs';
-//   const folderPath_RemoveOutput = '../TrafficSystemMockJs/TrafficSystemMockJs-CommentRemoverJs-out';
+//   // const folderPath_RemoveBase = '../TrafficSystemMockJs/TrafficSystemMockJs';
+//   // const folderPath_RemoveOutput = '../TrafficSystemMockJs/TrafficSystemMockJs-CommentRemoverJs-out';
+//   const folderPath_RemoveBase = '../TLightChat/tlightchat-main';
+//   const folderPath_RemoveOutput = '../TLightChat/tlightchat-main-preview';
 //   const mode_recursiveForSubFolder = true;
 //   const mode_JustPrintOrActuallyWriteToFile = false; // true: just Print, no write to file
 //   const arr_FolderNameSub_Exclude = ['node_modules', '.vscode'];

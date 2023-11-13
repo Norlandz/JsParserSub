@@ -17,6 +17,19 @@
         "${workspaceFolder}/**/*.js"
       ],
       // "outputCapture": "std"
-    }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run ts file one click with tsx (global)",
+      "runtimeExecutable": "tsx",
+      "runtimeArgs": [],
+      "program": "${file}",
+      "args": [],
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+    },
   ]
 }
