@@ -22,7 +22,7 @@ pipeline {
         sh 'node --version'
         sh 'npm --version'
         sh 'npm install -g pnpm@8.10.2'
-        sh 'pnm --version'
+        sh 'pnpm --version'
       }
     }
     stage('build') {
