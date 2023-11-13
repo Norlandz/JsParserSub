@@ -1,53 +1,61 @@
 pipeline {
   agent {
-    docker { 
+    node {
       label 'jenkinsAgent-jdk17-docker'
-      image 'node:20.9.0-slim' 
-      args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
 
-
   stages {
+    stage('inside docker image') {
+      agent {
+        docker { 
+          image 'node:20.9.0-slim' 
+          args '-v /var/run/docker.sock:/var/run/docker.sock'
+          reuseNode true
+        }
+      }
 
-    stage('checkout') {
-      steps {
-        git branch: 'main', url: 'https://github.com/Norlandz/JsParserSub' // @config[project name]
-        sh 'pwd'
-        sh 'ls -la'
-      }
-    }
-    stage('setup env') {
-      steps {
-        sh 'node --version'
-        sh 'npm --version'
-        sh 'npm install -g pnpm@8.10.2'
-        sh 'pnpm --version'
-      }
-    }
-    stage('build') {
-      steps {
-        sh 'pnpm install'
-      }
-    }
-    stage('test') {
-      steps {
-        sh 'echo "pseudo Testing"'
-      }
-    }
-    stage('build docker image') {
-      steps {
-        sh 'docker build -t mindde/jsparsersub:v0.0.1 .' // @config[project name]
-      }
-    }
-    stage('publish docker image') {
-      environment {
-        CredDockerhub = credentials('idVal_CredDockerhub')
-      }
-      steps {
-        sh 'docker login -u $CredDockerhub_USR -p $CredDockerhub_PSW'
-        sh 'docker push mindde/jsparsersub:v0.0.1' // @config[project name]
-        sh 'docker logout'
+      stages {
+        stage('checkout') {
+          steps {
+            git branch: 'main', url: 'https://github.com/Norlandz/JsParserSub' // @config[project name]
+            sh 'pwd'
+            sh 'ls -la'
+          }
+        }
+        stage('setup env') {
+          steps {
+            sh 'node --version'
+            sh 'npm --version'
+            sh 'npm install -g pnpm@8.10.2'
+            sh 'pnpm --version'
+          }
+        }
+        stage('build') {
+          steps {
+            sh 'pnpm install'
+          }
+        }
+        stage('test') {
+          steps {
+            sh 'echo "pseudo Testing"'
+          }
+        }
+        stage('build docker image') {
+          steps {
+            sh 'docker build -t mindde/jsparsersub:v0.0.1 .' // @config[project name]
+          }
+        }
+        stage('publish docker image') {
+          environment {
+            CredDockerhub = credentials('idVal_CredDockerhub')
+          }
+          steps {
+            sh 'docker login -u $CredDockerhub_USR -p $CredDockerhub_PSW'
+            sh 'docker push mindde/jsparsersub:v0.0.1' // @config[project name]
+            sh 'docker logout'
+          }
+        }
       }
     }
     stage('call (async) remote server to pull & run (deploy) docker image (using watchtower)') { // watchtower will do this, no need to _ special docker trigger / publish_over_ssh _
@@ -63,4 +71,6 @@ pipeline {
       }
     }
   }
+
+
 }
