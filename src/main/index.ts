@@ -1,6 +1,7 @@
 // const fastify = require('fastify'); // [1]
 import fastify from 'fastify';
 import { CommentRemoverJs } from './service/CommentRemoverJs.js';
+import { CodeConversionInputMsg, CodeConversionOutputMsg } from './msgSchema/CodeConversionMsgSchema.js';
 
 const serverOptions = {
   logger: true,
@@ -178,15 +179,15 @@ app.register(usersRouter, { prefix: 'v1' }); // [2]
 // ######## ^^^^^ test-learn
 // ######## ^^^^^ test-learn
 
-const ip_cors = 'http://localhost:3000'; // '127.0.0.1'; // dk port em // cannot use num, need localhost // TODO // @messy CROS .... design meaning .. n k dk 
+const ip_cors = 'http://localhost:3000'; // '127.0.0.1'; // dk port em // cannot use num, need localhost // TODO // @messy CROS .... design meaning .. n k dk
 
 // ;del; fastify.RouteGenericInterface
+// @todo fastify json conversion need_know ... & type safe pb
 app.post<{
-  // Querystring: IQuerystring;
-  Body: string;
-  Reply: string;
+  Body: CodeConversionInputMsg;
+  Reply: CodeConversionOutputMsg;
 }>('/v1/remove_Comment_inGiven_FileCode', async (request, reply) => {
-  const fileCode = request.body;
+  const fileCode = request.body.codeInput;
   console.log('>> remove_Comment_inGiven_FileCode ' + fileCode.substring(0, 250).replaceAll(/\r\n|\r|\n/g, '\\n'));
   const fileCode_CommentRemoved = CommentRemoverJs.remove_Comment_inGiven_FileCode(fileCode);
 
@@ -196,8 +197,24 @@ app.post<{
     'Access-Control-Allow-Headers': 'Content-Type',
   });
 
-  return fileCode_CommentRemoved;
+  // return fileCode_CommentRemoved;
+  return {
+    codeOutput: fileCode_CommentRemoved,
+  };
 });
+
+app.options<{
+  Body: string;
+  Reply: string;
+}>('/v1/remove_Comment_inGiven_FileCode', async (request, reply) => {
+  reply.headers({
+    'Access-Control-Allow-Origin': ip_cors,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    // 'really-getthis-2222': 'BBBDDD',
+    // @dk: cors has no pb... just that server 500 & guess cannot send back 'Access-Control-Allow-Origin' & chrome though cors is not enabled ... 
+  });
+  return 'before was all fine..... now, but why nextjs can call without this, but vite requires';
+})
 
 app.ready().then(() => {
   app.log.info('All plugins are now registered!');
@@ -212,20 +229,19 @@ app
     console.log(`Server is now listening on ${address}`);
   });
 
-
 // ;related;  []
 // ;related;      "start": "fastify start server.js"
 // ;related;  <>
 // ;related;  https://fastify.dev/docs/latest/Guides/Getting-Started/#run-your-server-from-cli
-// ;related;  
-// ;related;  // AvvioError [Error]: Plugin must be a function or a promise. Received: 'object' 
-// ;related;  
+// ;related;
+// ;related;  // AvvioError [Error]: Plugin must be a function or a promise. Received: 'object'
+// ;related;
 // ;related;  []
 // ;related;  And create your server file(s):
-// ;related;  
+// ;related;
 // ;related;  // server.js
 // ;related;  'use strict'
-// ;related;  
+// ;related;
 // ;related;  module.exports = async function (fastify, opts) {
 // ;related;    fastify.get('/', async (request, reply) => {
 // ;related;      return { hello: 'world' }
@@ -233,13 +249,12 @@ app
 // ;related;  }
 // ;related;  <>
 // ;related;  https://fastify.dev/docs/latest/Guides/Getting-Started/#extend-your-server
-// ;related;  
-// ;related;  
+// ;related;
+// ;related;
 // ;related;  []
 // ;related;  // Run the server!
 // ;related;  fastify.listen({ port: 3000 }, function (err, address) {
 // ;related;  <>
 // ;related;  https://fastify.dev/docs/latest/Guides/Getting-Started/#run-your-server-from-cli
-// ;related;  
+// ;related;
 // ;related;  ~~~// ... dk which way . unclear doc
-

@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "// dev": "node ./generated_Ts2Js/main/index.js",
     "dev": "npx tsx ./src/main/index.ts",
+    "watch": "tsx watch ./src/main/index.ts",
     "comment": "// npm run dev ...",
     "start": "// fastify start ./generated_Ts2Js/main/index.js"
   },
