@@ -178,10 +178,13 @@ class FsUtil {
     mode_recursiveForSubFolder: boolean,
     arr_FolderNameSub_Exclude: string[] = []
   ) {
+    console.log(`readDirSync_recursiveForSubFolder_recursive: ${folderPath_in}`);
+    const pathParsed = path.parse(folderPath_in);
     for (const folderName_Exclude_curr of arr_FolderNameSub_Exclude) {
-      if (path.parse(folderPath_in).base.toLowerCase() === folderName_Exclude_curr.toLowerCase()) {
+      if (pathParsed.base.toLowerCase() === folderName_Exclude_curr.toLowerCase()) {
         // compiler should now optimize...
         // skip this folder, if it should be excluded
+        console.log(`*skip ${pathParsed.dir}/${pathParsed.base}`);
         return arr_fileDir_All;
       }
     }
@@ -213,24 +216,5 @@ class FsUtil {
     return arr_fileDir_All;
   }
 }
-
-// {
-//   //   const folderPath_RemoveBase = './test/c01_simpleCase/res';
-//   //   const folderPath_RemoveOutput = './test/c01_simpleCase/CommentRemoverJs-out';
-//   // const folderPath_RemoveBase = '../TrafficSystemMockJs/TrafficSystemMockJs';
-//   // const folderPath_RemoveOutput = '../TrafficSystemMockJs/TrafficSystemMockJs-CommentRemoverJs-out';
-//   const folderPath_RemoveBase = '../TLightChat/tlightchat-main';
-//   const folderPath_RemoveOutput = '../TLightChat/tlightchat-main-preview';
-//   const mode_recursiveForSubFolder = true;
-//   const mode_JustPrintOrActuallyWriteToFile = false; // true: just Print, no write to file
-//   const arr_FolderNameSub_Exclude = ['node_modules', '.vscode'];
-//   CommentRemoverJs.remove_Comment_inGiven_Folder(folderPath_RemoveBase, folderPath_RemoveOutput, mode_recursiveForSubFolder, mode_JustPrintOrActuallyWriteToFile, arr_FolderNameSub_Exclude);
-// 
-//   // problem facing
-//   // 1. cannot work with js jsx cjs css scss file
-//   // 1. need exclude node_modules
-//   // 1. dist / test file can contain comment still ...
-// }
-// 
 
 export { CommentRemoverJs };

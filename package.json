@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "// dev": "node ./generated_Ts2Js/main/index.js",
     "dev": "npx tsx ./src/main/index.ts",
     "watch": "tsx watch ./src/main/index.ts",
-    "comment": "// npm run dev ...",
-    "start": "// fastify start ./generated_Ts2Js/main/index.js"
+    "cmdcall": "tsx ./src/main/cmdcall.ts",
+    "// dev": "node ./generated_Ts2Js/main/index.js",
+    "// start": "fastify start ./generated_Ts2Js/main/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +19,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "commander": "^11.1.0",
     "eslint": "^8.44.0",
     "tsx": "^4.1.1",
     "typescript": "^5.1.6"
